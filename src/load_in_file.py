@@ -35,8 +35,22 @@ class EXELload(Example):
         with pd.ExcelWriter(path_file) as writer_obj:
             df.to_excel(writer_obj, sheet_name="Вакансии")
 
+    @staticmethod
+    def get_salary(data_frame: pd.DataFrame) -> pd.DataFrame:
+        """Метод получения всех зарплат"""
+        salary: list = [d for d in data_frame['salary'] if d is not None]
+        return pd.DataFrame(salary)
+
 
 if __name__ == "__main__":
-    path_file = pathlib.Path.home().joinpath("report_vacancies.xlsx")
+    # path_file = pathlib.Path.home().joinpath("report_vacancies.xlsx")
     js_obj = HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0)
-    EXELload.load_in_exel_file(path_file, js_obj)
+    # EXELload.load_in_exel_file(path_file, js_obj)
+    df = EXELload.df_generate(HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0))
+    # print(js_obj["items"])
+    # print(type(df))
+    print(EXELload.get_salary(data_frame=df))
+
+
+
+
