@@ -1,7 +1,7 @@
+import json
 from abc import ABC, abstractmethod
 
 import requests
-import json
 
 # param = {'page': 1, 'per_page': 100, 'text': 'NAME:снабжение', 'area': '1384'}
 #
@@ -31,4 +31,4 @@ class HeadHunterAPI(PatternClassForWorkWithAPI):
 
 
 if __name__ == "__main__":
-    print(HeadHunterAPI.get_one_page_vacancies('снабжение', '1384', 0))
+    print(HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0))
