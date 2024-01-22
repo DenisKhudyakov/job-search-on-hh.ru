@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 
 from src.load_in_file import EXELload
 
+import pandas as pd
+
 
 class AbstractVacancy(ABC):
     @abstractmethod
@@ -13,9 +15,11 @@ class AbstractVacancy(ABC):
         pass
 
 
-class Vacancy:
+class Vacancy(AbstractVacancy):
     """Класс вакансия, создает новую вакансию экземпляр данного класса будет
     в формате json, необходимо определить метод __dict__"""
+
+    collect = []
 
     def __init__(self, name: str, url: str, salary: str, requirements: str) -> None:
         """Конструктор класса Вакансия, параметры название, электронный адрес, зарплата, требования к кандидату"""
@@ -23,6 +27,7 @@ class Vacancy:
         self.url = url
         self.salary = salary
         self.requirements = requirements
+        self.collect.append(self.__dict__())
 
     # Описываем геттеры всех параметров
     @property
@@ -42,19 +47,20 @@ class Vacancy:
         return self.requirements
 
     def __dict__(self):
+        """Переопределяем метод словарь"""
         return {
-            "items": [
-                {
-                    "name": self.name,
-                    "url": self.url,
-                    "salary": self.salary,
-                    "responsibility": self.requirements,
-                }
-            ]
+            "name": self.name,
+            "url": self.url,
+            "salary": self.salary,
+            "responsibility": self.requirements,
         }
+
+    def df_generate(self) -> pd.DataFrame:
+        """Метод который записывает все созданные экземпляры классов в ДатаФрейм"""
+        return pd.DataFrame(self.collect)
 
 
 if __name__ == "__main__":
-    print(
-        EXELload.df_generate(Vacancy("gdsfg", "gsdfg", "gsfdg", "gsdfgfg").__dict__())
-    )
+    any_dict = Vacancy("gdsfg", "gsdfg", "gsfdg", "gsdfgfg")
+    any_dict1 = Vacancy("gdsfg1", "gsdfg", "gsfdg", "gsdfgfg")
+    print(any_dict.df_generate())

@@ -4,6 +4,7 @@ from typing import Any, Optional
 
 import pandas as pd
 
+
 from src.getting_data_from_the_api import HeadHunterAPI
 
 

@@ -23,6 +23,7 @@ isort = "^5.13.2"
 pytest = "^7.4.4"
 requests = "^2.31.0"
 pandas = "^2.1.4"
+matplotlib = "^3.8.2"
 
 [build-system]
 requires = ["poetry-core"]
