@@ -18,7 +18,7 @@ class AbstractVacancy(ABC):
 class Vacancy(AbstractVacancy):
     """Класс вакансия, создает новую вакансию экземпляр данного класса будет
     в формате json, необходимо определить метод __dict__"""
-
+    __slots__ = ['name', 'url', 'salary', 'requirements']
     collect = []
 
     def __init__(self, name: str, url: str, salary: str, requirements: str) -> None:
