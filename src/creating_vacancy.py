@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-from src.load_in_file import EXELload
-
 import pandas as pd
+
+from src.load_in_file import EXELload
 
 
 class AbstractVacancy(ABC):
@@ -18,7 +18,8 @@ class AbstractVacancy(ABC):
 class Vacancy(AbstractVacancy):
     """Класс вакансия, создает новую вакансию экземпляр данного класса будет
     в формате json, необходимо определить метод __dict__"""
-    __slots__ = ['name', 'url', 'salary', 'requirements']
+
+    __slots__ = ["name", "url", "salary", "requirements"]
     collect = []
 
     def __init__(self, name: str, url: str, salary: str, requirements: str) -> None:
