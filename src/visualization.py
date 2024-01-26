@@ -31,7 +31,7 @@ class Graph:
 
 
 if __name__ == "__main__":
-    js_obj = HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0)
+    js_obj = HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0)["items"]
     df = EXELload.df_generate(js_obj)
     Graph.draw_hist(df)
     # Graph.draw(df)

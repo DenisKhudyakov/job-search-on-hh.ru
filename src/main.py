@@ -11,5 +11,18 @@ if __name__ == "__main__":
     answer_user = input('Ваш регион: ')
     number_region = SearchIdRegion.get_id(answer_user)
     print(f'Регион поиска выбран, индекс: {number_region}')
-    answer_user = input('Выберите специальность по которой желаете найти вакансии: ')
-    vacancy_search = CreateJSON(answer_user, number_region, page=0)
+    specialization = input('Выберите специальность по которой желаете найти вакансии: ')
+    vacancy_search = CreateJSON(name=specialization, region=number_region, page=0)
+    js_obj = HeadHunterAPI.get_one_page_vacancies(name=specialization, region=number_region, page=0)["items"]
+    for i in vacancy_search.create_new_stuckt():
+        print(f'Название специальности {i['Название специальности']}, Ссылка на объявление {i['Ссылка на объявление']},
+              f'Зарплата от {i['Зарплата от']} Зарплата до {i['Зарплата до']} Требования к кандидату {i['Требования к кандидату']}')
+    answer_user = input(f'Желаете ли Вы построить гистограмму заработных плат на специальность {specialization} Да/Нет ')
+    match answer_user.lower():
+        case 'да':
+            df = EXELload.df_generate(js_obj)
+            print('Выполняю...')
+            Graph.draw_hist(df)
+            print('До свидания')
+        case 'нет':
+            print('До свидания')

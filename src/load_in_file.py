@@ -25,7 +25,7 @@ class EXELload(Example):
     @staticmethod
     def df_generate(any_json: dict) -> pd.DataFrame:
         """Метод формирует дата фрейм из json"""
-        df = pd.DataFrame(any_json["items"])
+        df = pd.DataFrame(any_json)
         return df
 
     @classmethod
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     js_obj = HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0)
     # EXELload.load_in_exel_file(path_file, js_obj)
     df = EXELload.df_generate(
-        HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0)
+        HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0)["items"]
     )
     # print(js_obj["items"])
     # print(type(df))

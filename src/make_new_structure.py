@@ -28,7 +28,7 @@ class CreateJSON:
 
         @functools.wraps(func)
         def inner(*args, **kwargs) -> list:
-            with open("vacancy.json", "w", encoding="UTF-8") as f:
+            with open("vacancy.json", "a", encoding="UTF-8") as f:
                 result = func(*args, **kwargs)
                 json.dump(result, f, ensure_ascii=False, indent=4)
             return result
@@ -54,4 +54,4 @@ class CreateJSON:
 
 if __name__ == "__main__":
     api1 = CreateJSON("снабжение", "1384", 0)
-    api1.create_new_stuckt()
+    print(api1.create_new_stuckt())
