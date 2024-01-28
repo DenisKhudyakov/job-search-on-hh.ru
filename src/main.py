@@ -13,7 +13,7 @@ def dialog_with_user_about_vacancy_salary_gist() -> None:
     specialization = input('Выберите специальность по которой желаете найти вакансии: ')
     vacancy_search = CreateJSON(name=specialization, region=number_region, page=0)
     js_obj = HeadHunterAPI.get_one_page_vacancies(name=specialization, region=number_region, page=0)["items"]
-    for i in vacancy_search.create_new_stuckt():
+    for i in vacancy_search.create_new_struckt():
         print(f"Название специальности {i['Название специальности']}, Ссылка на объявление {i['Ссылка на объявление']},
               f"Зарплата от {i['Зарплата от']} Зарплата до {i['Зарплата до']} Требования к кандидату {i['Требования к кандидату']}")
     answer_user = input(f'Желаете ли Вы построить гистограмму заработных плат на специальность {specialization} Да/Нет ')
