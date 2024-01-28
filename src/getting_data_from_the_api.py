@@ -31,4 +31,4 @@ class HeadHunterAPI(PatternClassForWorkWithAPI):
 
 
 if __name__ == "__main__":
-    print(HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0)['items'])
+    print(HeadHunterAPI.get_one_page_vacancies("снабжение", "1384", 0)["items"])

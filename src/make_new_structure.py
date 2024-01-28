@@ -4,7 +4,6 @@ from copy import copy
 from typing import Callable, Optional
 
 from src.creating_vacancy import Vacancy
-
 from src.getting_data_from_the_api import HeadHunterAPI
 
 
@@ -95,11 +94,11 @@ class CreateJSON:
         return cls.vacancy_list
 
 
-
-
 if __name__ == "__main__":
     api1 = CreateJSON("снабжение", "1384", 0)
-    vacancy = Vacancy('машинист', 'www.hh.ru/vacancy/12543513', '5000-1000 руб', 'Быть весёлым')
+    vacancy = Vacancy(
+        "машинист", "www.hh.ru/vacancy/12543513", "5000-1000 руб", "Быть весёлым"
+    )
     CreateJSON.add_vacancy(vacancy)
     api1.create_new_struckt()
     print(api1.vacancy_list)

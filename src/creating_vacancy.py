@@ -67,14 +67,21 @@ class Vacancy(AbstractVacancy):
         Было: 1500-2000 руб
         Стало: (1500, 2000)
         """
-        list_salary = salary.split('-')
+        list_salary = salary.split("-")
         salary_to = list_salary[1].split()[0]
         return int(list_salary[0]), int(salary_to)
 
     @classmethod
     def filter_need_salary(cls, need_salary: int):
         """Функция определяет валидная ли вакансия, под заданную зарплату"""
-        return list(filter(lambda salary: cls.split_salary(salary['salary'])[0] <= need_salary <= cls.split_salary(salary['salary'])[1], cls.collect))
+        return list(
+            filter(
+                lambda salary: cls.split_salary(salary["salary"])[0]
+                <= need_salary
+                <= cls.split_salary(salary["salary"])[1],
+                cls.collect,
+            )
+        )
 
 
 if __name__ == "__main__":
