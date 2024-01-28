@@ -19,7 +19,7 @@ def test_get_all_regions(mock_get: Any, error: Any) -> None:
 @pytest.mark.parametrize(
     "region, result", [("Москва", "1"), ("Челябинская область", "1384")]
 )
-def test_get_id(region: Any, result: Any') -> None:
+def test_get_id(region: Any, result: Any) -> None:
     """тестовая функция получения ID"""
     assert SearchIdRegion.get_id(region) == result
     assert SearchIdRegion.get_id(region) == result
