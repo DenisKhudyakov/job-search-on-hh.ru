@@ -1,9 +1,32 @@
+import re
+from operator import itemgetter
+from typing import Generator
 from src.getting_data_from_the_api import HeadHunterAPI
 from src.load_in_file import EXELload
 from src.visualization import Graph
 from src.make_new_structure import CreateJSON
 from src.creating_vacancy import Vacancy
 from src.data_base_region import SearchIdRegion
+
+
+def filter_vacancies(hh_vacancies: list, filter_words: str) -> list:
+    """Функция фильтрации вакансии по ключевому слову, поиск ведётся в требованиях к кандидату"""
+    for i in hh_vacancies:
+        try:
+            if re.findall(r'\b({})\b'.format(filter_words), i["Требования к кандидату"]):
+                yield i
+        except TypeError:
+            continue
+
+
+def sort_vacancies(filtered_vacancies: Generator) -> list:
+    """Функция сортировки по зарплате"""
+    return sorted(list(filtered_vacancies), key=itemgetter('Зарплата от'))
+
+def get_top_vacancies(sorted_vacancies, top_n):
+    """Функция возвращает список топ вакансий"""
+    return sorted_vacancies[:top_n+1]
+
 
 def dialog_with_user_about_vacancy_salary_gist() -> None:
     print('Доброго времени суток! Выберите регион поиска работы')
@@ -14,9 +37,10 @@ def dialog_with_user_about_vacancy_salary_gist() -> None:
     vacancy_search = CreateJSON(name=specialization, region=number_region, page=0)
     js_obj = HeadHunterAPI.get_one_page_vacancies(name=specialization, region=number_region, page=0)["items"]
     for i in vacancy_search.create_new_struckt():
-        print(f"Название специальности {i['Название специальности']}, Ссылка на объявление {i['Ссылка на объявление']},
-              f"Зарплата от {i['Зарплата от']} Зарплата до {i['Зарплата до']} Требования к кандидату {i['Требования к кандидату']}")
-    answer_user = input(f'Желаете ли Вы построить гистограмму заработных плат на специальность {specialization} Да/Нет ')
+        print(f"""Название специальности {i['Название специальности']}, Ссылка на объявление {i['Ссылка на объявление']},
+              Зарплата от {i['Зарплата от']} Зарплата до {i['Зарплата до']} Требования к кандидату {i['Требования к кандидату']}""")
+    answer_user = input(
+        f'Желаете ли Вы построить гистограмму заработных плат на специальность {specialization} Да/Нет ')
     match answer_user.lower():
         case 'да':
             df = EXELload.df_generate(js_obj)
@@ -25,6 +49,7 @@ def dialog_with_user_about_vacancy_salary_gist() -> None:
             print('До свидания')
         case 'нет':
             print('До свидания')
+
 
 if __name__ == "__main__":
     pass
