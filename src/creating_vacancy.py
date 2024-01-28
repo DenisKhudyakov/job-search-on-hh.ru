@@ -60,8 +60,25 @@ class Vacancy(AbstractVacancy):
         """Метод который записывает все созданные экземпляры классов в ДатаФрейм"""
         return pd.DataFrame(self.collect)
 
+    @staticmethod
+    def split_salary(salary: str) -> tuple:
+        """
+        Функция которая преобразует формат зарплаты в
+        Было: 1500-2000 руб
+        Стало: (1500, 2000)
+        """
+        list_salary = salary.split('-')
+        salary_to = list_salary[1].split()[0]
+        return int(list_salary[0]), int(salary_to)
+
+    @classmethod
+    def filter_need_salary(cls, need_salary: int):
+        """Функция определяет валидная ли вакансия, под заданную зарплату"""
+        return list(filter(lambda salary: cls.split_salary(salary['salary'])[0] <= need_salary <= cls.split_salary(salary['salary'])[1], cls.collect))
+
 
 if __name__ == "__main__":
-    any_dict = Vacancy("gdsfg", "gsdfg", "gsfdg", "gsdfgfg")
-    any_dict1 = Vacancy("gdsfg1", "gsdfg", "gsfdg", "gsdfgfg")
-    print(any_dict.df_generate())
+    any_dict = Vacancy("Бухгалтер", "gsdfg", "1500-2000 руб", "Быть крутым работником")
+    any_dict1 = Vacancy("Машинист", "gsdfg", "5000-6000 руб", "Мало спать")
+    # print(any_dict.df_generate())
+    print(Vacancy.filter_need_salary(need_salary=5000))
